@@ -55,12 +55,28 @@ class ViewController: UIViewController , CLLocationManagerDelegate{
         
         CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
             if error != nil {
-                
+                print("Error getting location data ")
             }else {
                 if let placemark = placemarks?[0] {
+                    var subThoroughfare = "";
+                    var thoroughfare = "";
+                    var subAdministrativeArea = "";
+                    var country = "";
                     
+                    if placemark.subThoroughfare != nil{
+                        subThoroughfare = placemark.subThoroughfare!
+                    }
+                    if placemark.thoroughfare != nil{
+                        thoroughfare = placemark.thoroughfare!
+                    }
+                    if placemark.subAdministrativeArea != nil{
+                        subAdministrativeArea = placemark.subAdministrativeArea!
+                    }
+                    if placemark.country != nil{
+                        country = placemark.country!
+                    }
                     
-                    self.Address.text = " \(placemark.subThoroughfare!)  \(placemark.thoroughfare!)  \(placemark.subAdministrativeArea!)  \(placemark.country!) "
+                    self.Address.text = " \(subThoroughfare)  \(thoroughfare)  \(subAdministrativeArea)  \(country) "
                     print("Shailu \(placemark.country!)");
                 }
             }
