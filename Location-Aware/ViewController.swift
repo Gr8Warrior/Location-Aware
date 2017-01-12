@@ -58,25 +58,22 @@ class ViewController: UIViewController , CLLocationManagerDelegate{
                 print("Error getting location data ")
             }else {
                 if let placemark = placemarks?[0] {
-                    var subThoroughfare = "";
-                    var thoroughfare = "";
-                    var subAdministrativeArea = "";
-                    var country = "";
                     
+                    var address = ""
                     if placemark.subThoroughfare != nil{
-                        subThoroughfare = placemark.subThoroughfare!
+                        address  += placemark.subThoroughfare! + "\n"
                     }
                     if placemark.thoroughfare != nil{
-                        thoroughfare = placemark.thoroughfare!
+                        address  += placemark.thoroughfare! + "\n"
                     }
                     if placemark.subAdministrativeArea != nil{
-                        subAdministrativeArea = placemark.subAdministrativeArea!
+                        address  += placemark.subAdministrativeArea! + "\n"
                     }
                     if placemark.country != nil{
-                        country = placemark.country!
+                        address  += placemark.country! + "\n"
                     }
                     
-                    self.Address.text = " \(subThoroughfare)  \(thoroughfare)  \(subAdministrativeArea)  \(country) "
+                    self.Address.text = address
                     print("Shailu \(placemark.country!)");
                 }
             }
