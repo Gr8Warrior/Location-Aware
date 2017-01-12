@@ -7,8 +7,10 @@
 //
 
 import UIKit
-
-class ViewController: UIViewController {
+import CoreLocation
+class ViewController: UIViewController , CLLocationManagerDelegate{
+    
+    var locationManager : CLLocationManager = CLLocationManager()
 
     @IBOutlet var latitude: UILabel!
     
@@ -25,6 +27,12 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("SSS loaded")
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -34,5 +42,30 @@ class ViewController: UIViewController {
     }
 
 
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations[0]
+        
+        latitude.text = String(location.coordinate.latitude)
+        longitude.text = String(location.coordinate.longitude)
+        course.text = String(location.course);
+        speed.text = String(location.speed)
+        altitude.text = String(location.altitude)
+        
+        
+        
+        CLGeocoder().reverseGeocodeLocation(location) { (placemarks, error) in
+            if error != nil {
+                
+            }else {
+                if let placemark = placemarks?[0] {
+                    
+                    
+                    self.Address.text = " \(placemark.subThoroughfare!)  \(placemark.thoroughfare!)  \(placemark.subAdministrativeArea!)  \(placemark.country!) "
+                    print("Shailu \(placemark.country!)");
+                }
+            }
+        }
+    }
+    
 }
 
